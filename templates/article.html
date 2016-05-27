@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>статья</title>
+</head>
+<body>
+<h4>{{ article.article_title }}</h4>
+    <p>{{ article.article_body }}</p>
+    <p>
+    <h6>{{ article.article_date }}</h6>
+        Понравилось: {{ article.article_likes }}
+        Не понравилось:{{ article.article_dislikes }}
+    </p>
+<hr>
+<p>Комментарии</p>
+{%  for comment in comments %}
+    <p>{{ comment.comment_body }}</p>
+{% endfor %}
+</body>
+</body>
+</html>
