@@ -1,0 +1,22 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Блог</title>
+</head>
+<body>
+<p>
+       {% if username %}
+           <h6><a href="/logout/">Выйти ({{ username }})</a></h6>
+       {% else %}
+           <h6><a href="/login/">Войти</a></h6>
+       {% endif %}
+</p>
+<h1><a href="/">ХСЭ блог</a></h1>
+
+{% block article %}{% endblock %}
+{% block login %}{% endblock %}
+
+</body>
+</html>
