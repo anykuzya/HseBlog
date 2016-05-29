@@ -4,14 +4,21 @@
 <h4>{{ article.article_title }}</h4>
     <p>{{ article.article_body }}</p>
     <p>
-    <h6>{{ article.article_date }}</h6>
+    <h6>{{ author.username }} {{ article.article_date }}</h6>
         Понравилось: {{ article.article_likes }}
         Не понравилось: {{ article.article_dislikes }}
     </p>
 <hr>
 <p>Комментарии</p>
 {%  for comment in comments %}
-    <p>{{ comment.comment_body }}</p>
+    <p>{{ comment.comment_author }}: {{ comment.comment_body }}</p>
+    <p>{{ comment.comment_date }}</p>
 {% endfor %}
-
+{% if username %}
+    <form action="/articles/addcomment/{{ article.id }}/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="button" value="Добавить комментарий">
+    </form>
+{% endif %}
 {% endblock %}

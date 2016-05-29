@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block article %}
+
+{% if username %}
+    <form action="/addarticle/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="button" value="Опубликовать">
+    </form>
+{% else %}
+    <h4><a href="/login/">Войдите</a>, чтобы публиковать статьи</h4>
+{% endif %}
+
+{% endblock %}

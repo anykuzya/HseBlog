@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.utils import timezone
 from django.db import models
 from django.contrib import auth
 # Create your models here.
@@ -9,9 +10,9 @@ class Article(models.Model):
     class Meta():
         db_table = 'article'
 
-    article_title = models.CharField(max_length=200)
-    article_body = models.TextField()
-    article_date = models.DateTimeField()
+    article_title = models.CharField(max_length=200, verbose_name='Название статьи')
+    article_body = models.TextField(verbose_name='Текст статьи')
+    article_date = models.DateTimeField(default=timezone.now())
     article_likes = models.IntegerField(default=0)
     article_dislikes = models.IntegerField(default=0)
 #
@@ -30,8 +31,9 @@ class Comment(models.Model):
     class Meta():
         db_table = 'comment'
 
-    comment_body = models.TextField()
+    comment_body = models.TextField(verbose_name='Текст комментария')
     comment_article = models.ForeignKey(Article)
+    comment_date = models.DateTimeField(default=timezone.now())
     comment_author = models.ForeignKey(auth.models.User)
 
 
@@ -42,5 +44,5 @@ class UserArticle(models.Model):
 
     user = models.ForeignKey(auth.models.User)
     article = models.ForeignKey(Article)
-    role = models.IntegerField()  #like in POSIX API : can read = 4(always), can edit = 2, author 1
-    vote = models.IntegerField(default=0)  #+1; -1; not voted -- 0
+    role = models.IntegerField()  # like in POSIX API : can read = 4(always), can edit = 2, author 1
+    vote = models.IntegerField(default=0)  # +1; -1; not voted -- 0
