@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response, redirect
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.template.loader import get_template
 from django.template import Context
 from common_blog.models import Article, Comment, UserArticle
@@ -8,6 +8,8 @@ from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
 from django.template.context_processors import csrf
 from .forms import CommentForm, ArticleForm
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def login(request):
     args = {}
@@ -39,10 +41,14 @@ def register(request):
     if request.POST:
         registration_form = UserCreationForm(request.POST)
         if registration_form.is_valid():
-            registration_form.save()
+            newuser = registration_form.save()
             registration = auth.authenticate(username=registration_form.cleaned_data['username'],
                                              password=registration_form.cleaned_data['password2'])
+            for article in Article.objects.all():
+                userarticle = UserArticle(article=article, user=newuser, can_edit=False)
+                userarticle.save()
             auth.login(request, registration)
+
             return redirect('/')
         else:
             args['form'] = registration_form
@@ -52,6 +58,7 @@ def register(request):
 def articles(request):
     args = {}
     args.update(csrf(request))
+    #args['users'] = auth.models.User.objects.all()
     args['articles'] = Article.objects.all()
     args['username'] = auth.get_user(request).username
     return render_to_response('articles.html', args)
@@ -61,8 +68,8 @@ def article(request, article_id):
     comment_form = CommentForm
     args = {}
     args.update(csrf(request))
-  #  user_article = UserArticle.objects.get(article=article_id)
-  #  args['author'] = UserArticle.objects.get(user=user_article.id)
+    # post = Article.objects.get(id=article_id)
+    # args['author'] = auth.models.User.objects.get(id=post.article_author_id)
     args['article'] = Article.objects.get(id=article_id)
     args['comments'] = Comment.objects.filter(comment_article=article_id)
     args['username'] = auth.get_user(request).username
@@ -70,19 +77,52 @@ def article(request, article_id):
     return render_to_response('article.html', args)
 
 
-# TODO: like, dislike, addarticle
-
-
 def like(request, article_id):
-    pass
+    try:
+        userarticle = UserArticle.objects.get(user=auth.get_user(request), article_id=article_id)
+        if userarticle.vote == 1:
+            redirect('/')
+        else:
+            article = Article.objects.get(id=article_id)
+            article.article_likes += 1
+            article.article_dislikes += userarticle.vote
+            article.save()
+            userarticle.vote = 1
+            userarticle.save()
+            return redirect('/')
+    except ObjectDoesNotExist:
+        raise Http404
+    return redirect('/')
 
 
 def dislike(request, article_id):
-    pass
+    try:
+        userarticle = UserArticle.objects.get(user=auth.get_user(request), article_id=article_id)
+        if userarticle.vote == -1:
+            redirect('/')
+        else:
+            article = Article.objects.get(id=article_id)
+            article.article_dislikes += 1
+            article.article_likes -= userarticle.vote
+            article.save()
+            userarticle.vote = -1
+            userarticle.save()
+            return redirect('/')
+    except ObjectDoesNotExist:
+        raise Http404
+    return redirect('/')
 
 
 def addarticle(request):
     form = ArticleForm(request.POST)
+    if form.is_valid():
+        article_to_add = form.save(commit=False)
+        article_to_add.article_author = auth.get_user(request)
+        form.save()
+        for user in auth.models.User.objects.all():
+            userarticle = UserArticle(article=article_to_add, user=user,
+                                      can_edit=(user == auth.get_user(request)))
+            userarticle.save()
     return redirect('/')
 
 

@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block article %}
-<h4>{{ article.article_title }}</h4>
+<h4>{{ article.article_author }}: {{ article.article_title }}</h4>
     <p>{{ article.article_body }}</p>
     <p>
-    <h6>{{ author.username }} {{ article.article_date }}</h6>
+    <h6>{{ article.article_date }}</h6>
         Понравилось: {{ article.article_likes }}
         Не понравилось: {{ article.article_dislikes }}
     </p>

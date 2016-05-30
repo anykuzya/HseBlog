@@ -5,9 +5,16 @@
     <h4><a href="/articles/{{ article.id }}" > {{ article.article_title }}</a></h4>
     <p>{{ article.article_body }}</p>
     <p>
-    <h6>{{ article.article_date }}</h6>
-        Понравилось: {{ article.article_likes }}
-        Не понравилось:{{ article.article_dislikes }}
+    <h6>Опубликовано {{ article.article_date }} пользователем {{ article.article_author }}</h6>
+    {% if username %}
+    <p><a href="/articles/like/{{ article.id }}/">+ </a>{{ article.article_likes }}
+    <a href="/articles/dislike/{{ article.id }}/"> - </a>{{ article.article_dislikes }}
+    </p>
+    {% else %}
+        <p>+ {{ article.article_likes }}
+         - {{ article.article_dislikes }} </p>
+    </p>
+    {% endif %}
     </p>
     <hr>
 {% endfor %}
