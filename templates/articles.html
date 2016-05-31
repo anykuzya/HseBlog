@@ -7,8 +7,10 @@
     <p>
     <h6>Опубликовано {{ article.article_date }} пользователем {{ article.article_author }}</h6>
     {% if username %}
-    <p><a href="/articles/like/{{ article.id }}/">+ </a>{{ article.article_likes }}
-    <a href="/articles/dislike/{{ article.id }}/"> - </a>{{ article.article_dislikes }}
+    <p><button id='{{ article.id }}' class="like">
+    + {{ article.article_likes }}</button>
+    <button id='{{ article.id }}' class="dislike">
+    - {{ article.article_dislikes }}</button>
     </p>
     {% else %}
         <p>+ {{ article.article_likes }}

@@ -4,8 +4,38 @@
 <html>
 <head>
     <title>Блог</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+      $( "button.like" ).click(function(){
+        var current_button = $(this);
+        $.ajax({
+            url: "/articles/"+$(this).attr('id')+"/like/",
+            type: "GET",
+            data: {"article": $(this).attr('id')}},
+            success: function(data){
+              current_button.replaceWith( data );
+            }
+        });
+       });
+        $( "button.dislike" ).click(function(){
+        var current_button = $(this);
+        $.ajax({
+            url: "/articles/"+$(this).attr('id')+"/dislike/",
+            type: "GET",
+            data: {"article": $(this).attr('id')},
+            success: function(data){
+              current_button.replaceWith( data );
+
+            }
+        });
+       });
+    });
+    </script>
 </head>
 <body>
+
 <p>
        {% if username %}
            <h6><a href="/logout/">Выйти ({{ username }})</a></h6>

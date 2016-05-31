@@ -70,47 +70,51 @@ def article(request, article_id):
     args.update(csrf(request))
     # post = Article.objects.get(id=article_id)
     # args['author'] = auth.models.User.objects.get(id=post.article_author_id)
-    args['article'] = Article.objects.get(id=article_id)
-    args['comments'] = Comment.objects.filter(comment_article=article_id)
-    args['username'] = auth.get_user(request).username
-    args['form'] = comment_form
-    return render_to_response('article.html', args)
-
+    try:
+        args['article'] = Article.objects.get(id=article_id)
+        args['comments'] = Comment.objects.filter(comment_article=article_id)
+        args['username'] = auth.get_user(request).username
+        args['form'] = comment_form
+        return render_to_response('article.html', args)
+    except ObjectDoesNotExist:
+        raise Http404
 
 def like(request, article_id):
     try:
-        userarticle = UserArticle.objects.get(user=auth.get_user(request), article_id=article_id)
+        userarticle = UserArticle.objects.get(user=auth.get_user(request),
+                                              article_id=article_id)
+        article = Article.objects.get(id=article_id)
         if userarticle.vote == 1:
-            redirect('/')
+            html = "<button> + " + str(article.article_likes) + " Вы уже ставили + этой статье </button>"
         else:
-            article = Article.objects.get(id=article_id)
             article.article_likes += 1
             article.article_dislikes += userarticle.vote
             article.save()
             userarticle.vote = 1
             userarticle.save()
-            return redirect('/')
+            html = "<button> + " + str(article.article_likes) + "</button>"
+        return HttpResponse(html)
     except ObjectDoesNotExist:
         raise Http404
-    return redirect('/')
 
 
 def dislike(request, article_id):
     try:
-        userarticle = UserArticle.objects.get(user=auth.get_user(request), article_id=article_id)
+        userarticle = UserArticle.objects.get(user=auth.get_user(request),
+                                              article_id=article_id)
+        article = Article.objects.get(id=article_id)
         if userarticle.vote == -1:
-            redirect('/')
+            html = "<button> - " + str(article.article_dislikes) + " Вы уже ставили - этой статье </button>"
         else:
-            article = Article.objects.get(id=article_id)
             article.article_dislikes += 1
             article.article_likes -= userarticle.vote
             article.save()
             userarticle.vote = -1
             userarticle.save()
-            return redirect('/')
+            html = "<button> - " + str(article.article_dislikes) + "</button>"
+        return HttpResponse(html)
     except ObjectDoesNotExist:
         raise Http404
-    return redirect('/')
 
 
 def addarticle(request):
