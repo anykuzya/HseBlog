@@ -13,7 +13,7 @@
         $.ajax({
             url: "/articles/"+$(this).attr('id')+"/like/",
             type: "GET",
-            data: {"article": $(this).attr('id')}},
+            data: {"article": $(this).attr('id')},
             success: function(data){
               current_button.replaceWith( data );
             }
