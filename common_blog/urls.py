@@ -10,13 +10,14 @@ urlpatterns = [
 
   url(r'^articles/(?P<article_id>\d+)/like/$', views.like, name='like'),
   url(r'^articles/(?P<article_id>\d+)/dislike/$', views.dislike),
-  url(r'^articles/addcomment/(?P<article_id>\d+)/$', views.addcomment),
-  url(r'^addarticle/$', views.addarticle),
-  url(r'^newarticle/$', views.newarticle),
+  url(r'^articles/(?P<article_id>\d+)/add_comment/$', views.add_comment),
+  url(r'^add_article/$', views.add_article),
+  url(r'^new_article/$', views.new_article),
   url(r'^login/$', views.login),
   url(r'^logout/$', views.logout),
   url(r'^register/$', views.register),
 
+  url(r'^articles/$', views.articles),
   url(r'^$', views.articles),
 
 ]

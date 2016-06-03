@@ -3,7 +3,7 @@
 {% block article %}
 
 {% if username %}
-    <form action="/addarticle/" method="post">
+    <form action="/add_article/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" class="button" value="Опубликовать">

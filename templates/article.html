@@ -2,23 +2,18 @@
 
 {% block article %}
 
+
 <h4>{{ article.article_author }}: {{ article.article_title }}</h4>
     <p>{{ article.article_body }}</p>
-    <p>
     <h6>{{ article.article_date }}</h6>
     {% if username %}
-    </p>
-    <p><button id='{{ article.id }}' class="like">
-    + {{ article.article_likes }}</button>
-    <button id='{{ article.id }}' class="dislike">
-    - {{ article.article_dislikes }}</button>
+    <p>
+        <button art_id="{{ article.id }}" vote="+1" class="like"> + {{ article.article_likes }}</button>
+        <button art_id="{{ article.id }}" vote = "-1" class="dislike"> - {{ article.article_dislikes }}</button>
     </p>
     {% else %}
-        <p>+ {{ article.article_likes }}
-         - {{ article.article_dislikes }} </p>
-    </p>
+        <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}
-    </p>
 <hr>
 <p>Комментарии</p>
 {%  for comment in comments %}
@@ -26,7 +21,7 @@
     <p>{{ comment.comment_date }}</p>
 {% endfor %}
 {% if username %}
-    <form action="/articles/addcomment/{{ article.id }}/" method="post">
+    <form action="/articles/{{ article.id }}/add_comment/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" class="button" value="Добавить комментарий">

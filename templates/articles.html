@@ -7,17 +7,13 @@
     <p>
     <h6>Опубликовано {{ article.article_date }} пользователем {{ article.article_author }}</h6>
     {% if username %}
-    <p><button id='{{ article.id }}' class="like">
-    + {{ article.article_likes }}</button>
-    <button id='{{ article.id }}' class="dislike">
-    - {{ article.article_dislikes }}</button>
+    <p>
+        <button art_id="{{ article.id }}" vote="+1" class="like"> + {{ article.article_likes }}</button>
+        <button art_id="{{ article.id }}" vote = "-1" class="dislike"> - {{ article.article_dislikes }}</button>
     </p>
     {% else %}
-        <p>+ {{ article.article_likes }}
-         - {{ article.article_dislikes }} </p>
-    </p>
+        <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}
-    </p>
     <hr>
 {% endfor %}
 {% endblock %}
