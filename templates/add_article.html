@@ -6,7 +6,7 @@
     <form action="/add_article/" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" class="button" value="Опубликовать">
+    <p><input type="submit" class="button" value="Опубликовать"></p>
     </form>
 {% else %}
     <h4><a href="/login/">Войдите</a>, чтобы публиковать статьи</h4>

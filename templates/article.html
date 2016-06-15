@@ -4,13 +4,13 @@
 
 
 <h4>{{ article.article_author }}: {{ article.article_title }}</h4>
-    <p>{{ article.article_body }}</p>
+    <article>{{ article.article_body }}</article>
     <h6>{{ article.article_date }}</h6>
     {% if username %}
-    <p>
-        <button art_id="{{ article.id }}" vote="+1" class="like"> + {{ article.article_likes }}</button>
-        <button art_id="{{ article.id }}" vote = "-1" class="dislike"> - {{ article.article_dislikes }}</button>
-    </p>
+    <div>
+        <button art_id="{{ article.id }}" vote="+" class="like"> + </button>
+        <button art_id="{{ article.id }}" vote="-" class="dislike"> - </button>
+    </div>
     {% else %}
         <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}
@@ -24,7 +24,8 @@
     <form action="/articles/{{ article.id }}/add_comment/" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" class="button" value="Добавить комментарий">
+
+    <p><input type="submit" class="button" value="Добавить комментарий"></p>
     </form>
 {% endif %}
 {% endblock %}

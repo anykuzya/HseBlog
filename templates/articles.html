@@ -3,14 +3,16 @@
 {% block article %}
 {%  for article in articles %}
     <h4><a href="/articles/{{ article.id }}" > {{ article.article_title }}</a></h4>
-    <p>{{ article.article_body }}</p>
+    <article>{{ article.article_body }}</article>
     <p>
     <h6>Опубликовано {{ article.article_date }} пользователем {{ article.article_author }}</h6>
     {% if username %}
-    <p>
-        <button art_id="{{ article.id }}" vote="+1" class="like"> + {{ article.article_likes }}</button>
-        <button art_id="{{ article.id }}" vote = "-1" class="dislike"> - {{ article.article_dislikes }}</button>
-    </p>
+    <div>
+        <button art_id="{{ article.id }}" vote="+" class="vote"> + </button>
+        <i art_id="{{ article.id }}" class="'likes"> {{ article.article_likes }} </i>
+        <button art_id="{{ article.id }}" vote = "-" class="vote"> - </button>
+        <i art_id="{{ article.id }}" class="'dislikes"> {{ article.article_dislikes }} </i>
+    </div>
     {% else %}
         <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}

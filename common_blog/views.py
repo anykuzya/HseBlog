@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.template.context_processors import csrf
 from .forms import CommentForm, ArticleForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms import Form
 import json
 
 def login(request):
@@ -65,7 +66,7 @@ def articles(request):
 
 
 def article(request, article_id):
-    comment_form = CommentForm
+    comment_form = CommentForm()
     args = {}
     args.update(csrf(request))
     # post = Article.objects.get(id=article_id)
@@ -74,45 +75,32 @@ def article(request, article_id):
         args['article'] = Article.objects.get(id=article_id)
         args['comments'] = Comment.objects.filter(comment_article=article_id)
         args['username'] = auth.get_user(request).username
-        args['form'] = comment_form
+        args['form'] = comment_form.as_p()
         return render_to_response('article.html', args)
     except ObjectDoesNotExist:
         raise Http404
 
 
-def like(request, article_id):
+def vote(request, article_id, type):
+    if type == "+":
+        vote = 1;
+    elif type == "-":
+        vote = -1
+    else:
+        return redirect('/')
     try:
         userarticle = UserArticle.objects.get(user=auth.get_user(request),
                                               article_id=article_id)
         article = Article.objects.get(id=article_id)
-        if userarticle.vote != 1:
-            article.article_likes += 1
-            article.article_dislikes += userarticle.vote
+        if userarticle.vote != vote:
+            article.article_likes += vote
+            article.article_dislikes -= vote
             article.save()
-            userarticle.vote = 1
+            userarticle.vote = vote
             userarticle.save()
         data = json.dumps({"likes": article.article_likes,
                            "dislikes": article.article_dislikes,
-                           "voted": userarticle.vote == 1})
-        return HttpResponse(data)
-    except ObjectDoesNotExist:
-        raise Http404
-
-
-def dislike(request, article_id):
-    try:
-        userarticle = UserArticle.objects.get(user=auth.get_user(request),
-                                              article_id=article_id)
-        article = Article.objects.get(id=article_id)
-        if userarticle.vote != -1:
-            article.article_dislikes += 1
-            article.article_likes -= userarticle.vote
-            article.save()
-            userarticle.vote = -1
-            userarticle.save()
-        data = json.dumps({"likes": article.article_likes,
-                           "dislikes": article.article_dislikes,
-                           "voted": userarticle.vote == -1})
+                           "voted": userarticle.vote == vote})
         return HttpResponse(data)
     except ObjectDoesNotExist:
         raise Http404
@@ -132,11 +120,11 @@ def add_article(request):
 
 
 def new_article(request):
-    article_form = ArticleForm
+    article_form = ArticleForm()
     args = {}
     args.update(csrf(request))
     args['username'] = auth.get_user(request).username
-    args['form'] = article_form
+    args['form'] = article_form.as_p()
     return render_to_response('add_article.html', args)
 
 
