@@ -59,8 +59,8 @@ def register(request):
 def articles(request):
     args = {}
     args.update(csrf(request))
-    # args['users'] = auth.models.User.objects.all()
-    args['articles'] = Article.objects.all()
+    articles = Article.objects.all()
+    args['articles'] = articles
     args['username'] = auth.get_user(request).username
     return render_to_response('articles.html', args)
 
@@ -72,7 +72,10 @@ def article(request, article_id):
     # post = Article.objects.get(id=article_id)
     # args['author'] = auth.models.User.objects.get(id=post.article_author_id)
     try:
-        args['article'] = Article.objects.get(id=article_id)
+        article = Article.objects.get(id=article_id)
+        body = article.article_body
+        args['article'] = article
+        args['article_lines'] = body.split("\n")
         args['comments'] = Comment.objects.filter(comment_article=article_id)
         args['username'] = auth.get_user(request).username
         args['form'] = comment_form.as_p()
@@ -92,12 +95,17 @@ def vote(request, article_id, type):
         userarticle = UserArticle.objects.get(user=auth.get_user(request),
                                               article_id=article_id)
         article = Article.objects.get(id=article_id)
-        if userarticle.vote != vote:
+        if userarticle.vote == 0:
+            if vote == 1:
+                article.article_likes += vote
+            elif vote == -1:
+                article.article_dislikes -= vote
+        elif userarticle.vote != vote:
             article.article_likes += vote
             article.article_dislikes -= vote
-            article.save()
-            userarticle.vote = vote
-            userarticle.save()
+        article.save()
+        userarticle.vote = vote
+        userarticle.save()
         data = json.dumps({"likes": article.article_likes,
                            "dislikes": article.article_dislikes,
                            "voted": userarticle.vote == vote})
@@ -111,6 +119,8 @@ def add_article(request):
     if form.is_valid():
         article_to_add = form.save(commit=False)
         article_to_add.article_author = auth.get_user(request)
+        annotation = form.data["article_body"].strip("\n").split("\n")[0]
+        article_to_add.article_annotation = annotation
         form.save()
         for user in auth.models.User.objects.all():
             userarticle = UserArticle(article=article_to_add, user=user,

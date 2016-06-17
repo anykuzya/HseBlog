@@ -13,6 +13,7 @@ class Article(models.Model):
     article_title = models.CharField(max_length=200, verbose_name='Название статьи')
     article_author = models.ForeignKey(auth.models.User)
     article_body = models.TextField(verbose_name='Текст статьи')
+    article_annotation = models.TextField(blank=False)
     article_date = models.DateTimeField(default=timezone.now)
     article_likes = models.IntegerField(default=0)
     article_dislikes = models.IntegerField(default=0)

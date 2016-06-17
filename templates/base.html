@@ -7,18 +7,19 @@
     <title>Блог</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static "js/votes.js" %}"></script>
-
+    <link rel="stylesheet" href={% static "css/style.css" %}/>
 </head>
 <body>
 
-<p>
+<div class="auth">
        {% if username %}
-           <h6><a href="/logout/">Выйти ({{ username }})</a></h6>
-           <h5><a href="/new_article/">Опубликовать статью</a> </h5>
+           <p>Вы зашли как {{ username }}</p>
+           <button><a href="/logout/">Выйти</a></button>
+           <p><a href="/new_article/">Опубликовать статью</a> </p>
        {% else %}
-           <h6><a href="/login/">Войти</a></h6>
+           <button><a href="/login/">Войти</a></button>
        {% endif %}
-</p>
+</div>
 <h1><a href="/">ХСЭ блог</a></h1>
 
 {% block article %}{% endblock %}

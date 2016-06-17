@@ -1,0 +1,42 @@
+label, textarea, input {
+    display: block;
+}
+
+body {
+    padding: 20pt;
+}
+
+div.auth {
+    padding_right: 20pt;
+    padding-top: 5pt;
+    position: fixed;
+    /*left: 0pt;*/
+    right: 0pt;
+    top: 0pt;
+    height: 20pt;
+}
+
+.auth p, button {
+    display: inline-block;
+}
+
+div.art a, p {
+    display: inline-block;
+}
+
+
+#id_article_title {
+    width: 300pt;
+}
+
+#id_article_body {
+    width: 700pt;
+    height: 300pt;
+    overflow: scroll;
+}
+
+#id_comment_body {
+    width: 500pt;
+    height: 100pt;
+    overflow: scroll;
+}
