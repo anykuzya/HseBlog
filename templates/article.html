@@ -2,7 +2,7 @@
 
 {% block article %}
 
-
+<div class = article>
 <h4>{{ article.article_author }}: {{ article.article_title }}</h4>
     {% for line in article_lines %}
         <p>{{ line }}</p>
@@ -18,17 +18,20 @@
     {% else %}
         <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}
-<hr>
-<p>Комментарии</p>
-{%  for comment in comments %}
-    <p>{{ comment.comment_author }}: {{ comment.comment_body }}</p>
-    <p>{{ comment.comment_date }}</p>
-{% endfor %}
-{% if username %}
-    <form action="/articles/{{ article.id }}/add_comment/" method="post">
-    {% csrf_token %}
-        {{ form }}
-    <input type="submit" class="button" value="Добавить комментарий">
-    </form>
-{% endif %}
+</div>
+<div class = comments><hr>
+    <p style="padding-left: 20pt">Комментарии:</p>
+    {%  for comment in comments %}
+        <hr>
+        <p style="padding-left: 20pt">{{ comment.comment_author }}: {{ comment.comment_body }}</p>
+        <p style="padding-left: 30pt">{{ comment.comment_date }}</p>
+    {% endfor %}
+    {% if username %}
+        <form action="/articles/{{ article.id }}/add_comment/" method="post">
+        {% csrf_token %}
+            {{ form }}
+        <input type="submit" class="button" value="Добавить комментарий">
+        </form>
+    {% endif %}
+</div>
 {% endblock %}

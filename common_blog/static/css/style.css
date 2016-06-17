@@ -1,27 +1,65 @@
 label, textarea, input {
     display: block;
+    overflow: auto;
+}
+
+div.name{
+    padding: 5pt;
+    font-size: 40pt;
+    font-family: fantasy;
+    font-style: oblique;
 }
 
 body {
-    padding: 20pt;
+    margin: 60pt;
+    background-color: lightblue;
+}
+
+div.comments {
+    background-color: antiquewhite;
 }
 
 div.auth {
-    padding_right: 20pt;
-    padding-top: 5pt;
     position: fixed;
     /*left: 0pt;*/
+    right: 20pt;
+    top: 0pt;
+    height: 40pt;
+}
+
+div.auth_cont {
+    position: fixed;
+    left: 0pt;
     right: 0pt;
     top: 0pt;
-    height: 20pt;
+    height: 60pt;
+    background-color: aquamarine;
+}
+
+div.pagination {
+    position: fixed;
+    left: 0pt;
+    right: 0pt;
+    bottom: 0pt;
+    height: 60pt;
+    text-align: center;
+    background-color: aquamarine;
 }
 
 .auth p, button {
     display: inline-block;
 }
+.auth a {
+    display: block;
+}
 
-div.art a, p {
+div.art a {
     display: inline-block;
+}
+
+div.article {
+    padding: 20pt;
+    background-color: bisque;
 }
 
 
@@ -36,6 +74,7 @@ div.art a, p {
 }
 
 #id_comment_body {
+    margin: 0;
     width: 500pt;
     height: 100pt;
     overflow: scroll;

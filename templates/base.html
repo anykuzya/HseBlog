@@ -5,25 +5,32 @@
 <html>
 <head>
     <title>Блог</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>#}
     <script src="{% static "js/votes.js" %}"></script>
+    <script src="{% static "js/jquery.min.js" %}"></script>
     <link rel="stylesheet" href={% static "css/style.css" %}/>
 </head>
 <body>
+<div class="auth_cont">
 
-<div class="auth">
-       {% if username %}
-           <p>Вы зашли как {{ username }}</p>
-           <button><a href="/logout/">Выйти</a></button>
-           <p><a href="/new_article/">Опубликовать статью</a> </p>
-       {% else %}
-           <button><a href="/login/">Войти</a></button>
-       {% endif %}
+    <div class="name"><a href="/">ХСЭ блог</a></div>
+    <div class="auth">
+           {% if username %}
+               <p>Вы зашли как {{ username }}</p>
+               <button><a href="/logout/">Выйти</a></button>
+               <a href="/new_article/">Опубликовать статью</a>
+           {% else %}
+               <button><a href="/login/">Войти</a></button>
+           {% endif %}
+    </div>
 </div>
-<h1><a href="/">ХСЭ блог</a></h1>
 
 {% block article %}{% endblock %}
-{% block login %}{% endblock %}
+<div class="login">{% block login %}{% endblock %}</div>
+<div class="pagination">
+    <p>Здесь могла бы быть пагинация.</p>
+    <p>Или Ваша реклама :)</p>
+</div>
 
 </body>
 </html>
