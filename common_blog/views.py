@@ -74,9 +74,11 @@ def article(request, article_id):
     try:
         article = Article.objects.get(id=article_id)
         body = article.article_body
+        comments = Comment.objects.filter(comment_article=article_id)
         args['article'] = article
         args['article_lines'] = body.split("\n")
-        args['comments'] = Comment.objects.filter(comment_article=article_id)
+        args['no_comments'] = comments.count == 0;
+        args['comments'] = comments
         args['username'] = auth.get_user(request).username
         args['form'] = comment_form.as_p()
         return render_to_response('article.html', args)

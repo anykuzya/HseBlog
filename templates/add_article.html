@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block article %}
-
+<div class="new_art">
 {% if username %}
     <form action="/add_article/" method="post">
     {% csrf_token %}
@@ -11,5 +11,5 @@
 {% else %}
     <h4><a href="/login/">Войдите</a>, чтобы публиковать статьи</h4>
 {% endif %}
-
+</div>
 {% endblock %}

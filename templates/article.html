@@ -3,7 +3,8 @@
 {% block article %}
 
 <div class = article>
-<h4>{{ article.article_author }}: {{ article.article_title }}</h4>
+<h4>  Опубликовано пользователем {{ article.article_author }}</h4>
+    <h2>{{ article.article_title }}</h2>
     {% for line in article_lines %}
         <p>{{ line }}</p>
     {% endfor %}
@@ -19,12 +20,12 @@
         <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
     {% endif %}
 </div>
+
 <div class = comments><hr>
-    <p style="padding-left: 20pt">Комментарии:</p>
+    <p style="padding-left: 20pt">Комментарии</p><hr>
     {%  for comment in comments %}
-        <hr>
         <p style="padding-left: 20pt">{{ comment.comment_author }}: {{ comment.comment_body }}</p>
-        <p style="padding-left: 30pt">{{ comment.comment_date }}</p>
+        <p style="padding-left: 20pt">{{ comment.comment_date }}</p><hr>
     {% endfor %}
     {% if username %}
         <form action="/articles/{{ article.id }}/add_comment/" method="post">
@@ -32,6 +33,9 @@
             {{ form }}
         <input type="submit" class="button" value="Добавить комментарий">
         </form>
+    {% else %}
+        <a style="padding-left: 20pt" href="/login/">Войдите</a> или <a href="/register/">зарегистрируйтесь</a>,
+        чтобы добавить новый комментарий!</p>
     {% endif %}
 </div>
 {% endblock %}

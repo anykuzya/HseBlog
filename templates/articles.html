@@ -3,6 +3,8 @@
 {% block article %}
 {%  for article in articles %}
     <div class="art">
+        <hr>
+        <div class="annotation">
         <h3><a href="/articles/{{ article.id }}" > {{ article.article_title }}</a></h3>
         <p>{{ article.article_annotation }}</p>
         <a href="/articles/{{ article.id }}" > ... </a>
@@ -17,6 +19,7 @@
         {% else %}
             <p>+ {{ article.article_likes }} - {{ article.article_dislikes }}</p>
         {% endif %}
+        </div>
         <hr>
     </div>
 {% endfor %}

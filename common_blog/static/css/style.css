@@ -1,22 +1,49 @@
-label, textarea, input {
+label, textarea, input, button {
     display: block;
     overflow: auto;
+    left: inherit;
+    right: inherit;
+    margin: 5pt;
+}
+
+div.comments input, div.comments label, div.article input, div.article label {
+    margin-left: 20pt;
+}
+textarea {
+    padding: 3pt;
+    margin-left: 20pt;
 }
 
 div.name{
-    padding: 5pt;
-    font-size: 40pt;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+    font-size: 33pt;
     font-family: fantasy;
     font-style: oblique;
+    margin-left: 20pt;
 }
 
+div.annotation {
+    padding: 5pt;
+}
+
+div.art {
+    background-color: bisque;
+}
+div.new_art {
+    padding: 20pt;
+    background-color: bisque;
+}
 body {
-    margin: 60pt;
+    margin: 50pt;
+    padding-left: 50pt;
+    padding-right: 50pt;
     background-color: lightblue;
 }
 
 div.comments {
     background-color: antiquewhite;
+    padding-bottom: 10pt;
 }
 
 div.auth {
@@ -24,7 +51,7 @@ div.auth {
     /*left: 0pt;*/
     right: 20pt;
     top: 0pt;
-    height: 40pt;
+    height: 35pt;
 }
 
 div.auth_cont {
@@ -32,7 +59,7 @@ div.auth_cont {
     left: 0pt;
     right: 0pt;
     top: 0pt;
-    height: 60pt;
+    height: 50pt;
     background-color: aquamarine;
 }
 
@@ -41,20 +68,17 @@ div.pagination {
     left: 0pt;
     right: 0pt;
     bottom: 0pt;
-    height: 60pt;
+    height: 50pt;
     text-align: center;
     background-color: aquamarine;
 }
 
 .auth p, button {
     display: inline-block;
+    margin-top: 5pt;
 }
 .auth a {
     display: block;
-}
-
-div.art a {
-    display: inline-block;
 }
 
 div.article {
@@ -64,18 +88,22 @@ div.article {
 
 
 #id_article_title {
+    margin-left: 20pt;
     width: 300pt;
 }
 
 #id_article_body {
-    width: 700pt;
-    height: 300pt;
+    position: relative;
+    left: 0pt;
+    right: 0pt;
+    width: 70%;
+    height: 250pt;
     overflow: scroll;
 }
 
 #id_comment_body {
-    margin: 0;
-    width: 500pt;
+
+    width: 70%;
     height: 100pt;
     overflow: scroll;
 }
