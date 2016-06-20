@@ -22,6 +22,9 @@ div.name{
     font-style: oblique;
     margin-left: 20pt;
 }
+.vote button {
+     display: inline-block;
+}
 
 div.annotation {
     padding: 5pt;
@@ -54,6 +57,15 @@ div.auth {
     height: 35pt;
 }
 
+div.auth li {
+    display: inline-block;
+
+}
+div.auth li.art {
+    display: block;
+}
+
+
 div.auth_cont {
     position: fixed;
     left: 0pt;
@@ -73,11 +85,8 @@ div.pagination {
     background-color: aquamarine;
 }
 
-.auth p, button {
-    display: inline-block;
-    margin-top: 5pt;
-}
-.auth a {
+
+li.art {
     display: block;
 }
 

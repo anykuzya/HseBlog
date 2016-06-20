@@ -16,11 +16,11 @@
     <div class="name"><a href="/">ХСЭ блог</a></div>
     <div class="auth">
            {% if username %}
-               <p>Вы зашли как {{ username }}</p>
-               <button><a href="/logout/">Выйти</a></button>
-               <a href="/new_article/">Опубликовать статью</a>
+               <li>Вы зашли как {{ username }}</li>
+               <li><a href="/logout/">Выйти</a></li>
+               <li class="art"><a href="/new_article/">Опубликовать статью</a></li>
            {% else %}
-               <button><a href="/login/">Войти</a></button>
+               <li><a href="/login/">Войти</a></li>
            {% endif %}
     </div>
 </div>

@@ -7,7 +7,7 @@
         <div class="annotation">
         <h3><a href="/articles/{{ article.id }}" > {{ article.article_title }}</a></h3>
         <p>{{ article.article_annotation }}</p>
-        <a href="/articles/{{ article.id }}" > ... </a>
+        <i><a href="/articles/{{ article.id }}" > ... </a></i>
         <h5>Опубликовано {{ article.article_date }} пользователем {{ article.article_author }}</h5>
         {% if username %}
         <div art_id="{{ article.id }}" class="vote">
