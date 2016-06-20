@@ -6,7 +6,9 @@
 Создание базы данных:
 
 `python manage.py makemigrations common_blog`
+
 `python manage.py migrate`
+
 Запустить сервер:
 
 `python manage.py runserver`
