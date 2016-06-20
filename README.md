@@ -5,15 +5,11 @@
 
 Создание базы данных:
 
-
-    ```
-    python manage.py makemigrations common_blog
-    python manage.py migrate
-    ```
+`python manage.py makemigrations common_blog`
+`python manage.py migrate`
 Запустить сервер:
 
-
-    `python manage.py runserver`
+`python manage.py runserver`
 
 
 После этого в браузере по адресу 127.0.0.1:8000 видим наш сайт.
